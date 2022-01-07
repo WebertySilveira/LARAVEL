@@ -2,23 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use App\Models\Serie;
+
 class SeriesController extends Controller
 {
 
-    public function index(){
-        $series = [
-            "The Crown",
-            "Stranger Things",
-            "The Witcher"
-        ];
-        
-        $html = "<ul>";
-        foreach($series as $value)
-        {
-            $html .= ("<li>{$value}</li>");
-        }
-        $html .= "</ul>";
+    public function index(Request $request)
+    {
+        $series = Serie::all();
+        return view('series.index', compact('series'));
+    }
 
-        return $html;
+    public function create()
+    {
+        return view('series.create');
+    }
+
+    public function store(Request $request)
+    {
+        $serie = $request->serie;
+        $rank = $request->rank;
+
+        $series = Serie::create([
+            'series' => $serie,
+            'ranks' => $rank
+        ]);
+        
+        echo("{$series->series} Adicionada com sucesso!");
+
     }
 }
