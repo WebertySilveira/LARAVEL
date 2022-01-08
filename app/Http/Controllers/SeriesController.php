@@ -10,10 +10,11 @@ class SeriesController extends Controller
 
     public function index(Request $request)
     {
-        $series = Serie::query()->orderBy('ranks', 'DESC')->get();
-        $message = $request->session()->get('message');
+        $series = Serie::query()->get();
+        $addMessage = $request->session()->get('addMessage');
+        $destroyMessage = $request->session()->get('destroyMessage');
 
-        return view('series.index', compact('series', 'message'));
+        return view('series.index', compact('series', 'addMessage', 'destroyMessage'));
     }
 
     public function create()
@@ -23,6 +24,10 @@ class SeriesController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'serie' => 'required',
+        ]);
+
         $serie = $request->serie;
         $rank = $request->rank;
 
@@ -30,8 +35,15 @@ class SeriesController extends Controller
             'series' => $serie,
             'ranks' => $rank
         ]);
-        $request->session()->flash('message', "{$series->series} Adicionada com Sucesso!");
+        $request->session()->flash('addMessage', "{$series->series} Adicionada com Sucesso!");
         
+        return redirect('/series');
+    }
+
+    public function destroy(Request $request)
+    {
+        $series = Serie::destroy($request->id);
+        $request->session()->flash('destroyMessage', "Série removida com Sucesso!");
         return redirect('/series');
     }
 }

@@ -14,7 +14,7 @@ class CreateSeriesTable extends Migration
     public function up()
     {
         Schema::create('series', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('series');
             $table->string('ranks');
             $table->timestamps();
