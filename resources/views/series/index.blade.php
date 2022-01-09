@@ -22,6 +22,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Série</th>
                         <th scope="col">Nota</th>
+                        <th scope="col">Informações</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -36,6 +37,9 @@
                                 str_repeat('<i class="fas fa-star"></i>',  intval($name->ranks))
                             ); 
                             ?>
+                        </td>
+                        <td>
+                            <a href="/series/{{ $name->id }}/seasons" class="btn btn-primary mb-2">Ver Mais</a>
                         </td>
                         <td>
                             <form method="post" action="/series/{{$name->id}}" onsubmit="return confirm('Tem certeza que desaja remover {{ addslashes($name->series) }}?')">

@@ -28,6 +28,14 @@
                 </div>
 
                 <div class="col-6">
+                    <input type="number" name="seasons" class="form-control" placeholder="Temporadas">
+                </div>
+
+                <div class="col-6">
+                    <input type="number" names="episodes" class="form-control" placeholder="Episódios">
+                </div>
+
+                <div class="col-6">
                     <button type="submit" class="btn btn-primary">Adicionar</button>
                 </div>
             </form>

@@ -28,14 +28,24 @@ class SeriesController extends Controller
             'serie' => 'required',
         ]);
 
-        $serie = $request->serie;
-        $rank = $request->rank;
-
-        $series = Serie::create([
-            'series' => $serie,
-            'ranks' => $rank
+        $serie = Serie::create([
+            'series' => $request->serie,
+            'ranks' => $request->rank
         ]);
-        $request->session()->flash('addMessage', "{$series->series} Adicionada com Sucesso!");
+
+        $seasons = $request->seasons;
+        $episodes = $request->episodes;
+        for($i = 1; $i <= $seasons; $i++)
+        {
+            $season = $serie->seasons()->create(['number' => $i]);
+
+            for($j = 1; $j <= $episodes; $j++)
+            {
+                $season->episodes()->create(['number' => $j]);
+            }
+        }
+
+        $request->session()->flash('addMessage', "{$serie->series} Adicionada com Sucesso!");
         
         return redirect('/series');
     }
